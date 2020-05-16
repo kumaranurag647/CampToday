@@ -2,7 +2,8 @@ var middlewareObj={};
 
 var campgrounds=require("../models/campground.js");
 var Comment=require("../models/comment.js");
-middlewareObj.chechCGOwnership=function(req,res,next){
+
+middlewareObj.checkCGOwnership=function(req,res,next){
 	if(req.isAuthenticated()){
 	   campgrounds.findById(req.params.id,function(err,foundCampground){
 		   // || ! foundCampground is imp to prevent breaking down of aur app if obj id is chnaged
@@ -28,7 +29,7 @@ middlewareObj.chechCGOwnership=function(req,res,next){
 	   }
 
 }
-middlewareObj.chechOwnership=function(req,res,next){
+middlewareObj.checkCommentOwnership=function(req,res,next){
 	if(req.isAuthenticated()){
 	   Comment.findById(req.params.comment_id,function(err,foundComment){
 		if(err || !foundComment){
@@ -57,8 +58,21 @@ middlewareObj.isLoggedIn=function (req,res,next){
 	if(req.isAuthenticated()){
 		return next();
 	}
+	
+	 if(req['headers']['content-type'] === 'application/json'){
+	 	return res.send({error: 'Login Required'})
+	 }
+	
 	req.flash("error","You need to login first to do that!")
 	res.redirect("/login");
+}
+
+middlewareObj.isPaid=function (req,res,next){
+	
+	if(req.user.isPaid) return next();
+	
+	req.flash("error","Please complete the registration process first.")
+	res.redirect("/checkout");
 }
 
 module.exports=middlewareObj;

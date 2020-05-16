@@ -1,3 +1,4 @@
+
 .thumbnail img{
 	width:100%;
 	
@@ -6,13 +7,21 @@
 	padding:0;
 }
 
+.card-body{
+	background: #EAEDED;
+}
+
+.card{
+	border: 1px solid black;
+}
 .thumbnail .caption{
 	padding:9px;
 }
 
 .jumbotron .container h1{
-	font-family: 'Comic Neue', cursive;
-	color:purple;
+	font-family: Helvetica, sans-serif
+	font-weight: 900
+	color:black;
 }
 #landing{
 	font-family: 'Comic Neue', cursive;

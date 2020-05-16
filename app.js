@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express      =require("express"),
     app          =express(),
     bodyParser   =require("body-parser"),
@@ -15,12 +16,16 @@ var commentRoutes   =require("./routes/comments.js"),
 	campgroundRoutes=require("./routes/campgrounds.js"),
 	authRoutes      =require("./routes/landing.js");
 
+app.set('view engine', 'ejs');
+
 // seedDB(); //seed the database
 mongoose.set('useFindAndModify', false);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useNewUrlParser', true);
 // process.env.DATABASEURL
-// mongodb://localhost/yelp_camp_v1
+
+//mongoose.connect("mongodb://localhost:27017/yelp_camp_v11_stripe");
+ 
 mongoose.connect("mongodb+srv://Anurag:ANUkumar8!!@cluster0-rwhxu.mongodb.net/test?retryWrites=true&w=majority").then(() => {
 	console.log('Connected to DB!');
 }).catch(err => {
@@ -41,7 +46,9 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-app.use(bodyParser.urlencoded({extended:true}));
+
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 app.use(function(req,res,next){
 	res.locals.currentUser=req.user;
 	res.locals.error=req.flash("error");

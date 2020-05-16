@@ -1,8 +1,13 @@
 var express=require("express");
 var router =express.Router();
 var campgrounds=require("../models/campground.js");
-var middleware=require("../middleware");
+
+const {checkCGOwnership, isLoggedIn, isPaid}=require("../middleware");
+router.use(isLoggedIn,isPaid);
+
 router.get("/",function(req,res){
+	
+     if(req.query.paid)  res.locals.success = 'Payment succeeded, welcome to YelpCamp!';
 	
      campgrounds.find({},function(err,allCampgrounds){
 		 if(err){
@@ -15,7 +20,7 @@ router.get("/",function(req,res){
 	
 });
 
-router.post("/",middleware.isLoggedIn,function(req,res){
+router.post("/", function(req,res){
 	var name=req.body.name;
 	var price=req.body.price;
 	var image=req.body.image;
@@ -40,7 +45,7 @@ router.post("/",middleware.isLoggedIn,function(req,res){
 	
 });
 
-router.get("/new",middleware.isLoggedIn,function(req,res){
+router.get("/new",function(req,res){
 	res.render("campgrounds/new.ejs");
 });
 
@@ -62,15 +67,16 @@ router.get("/:id",function(req,res){
 	
 });
 //edit
-router.get("/:id/edit",middleware.chechCGOwnership,function(req,res){
+router.get("/:id/edit", checkCGOwnership,function(req,res){
 	//is user logged in?
 	
 	   campgrounds.findById(req.params.id,function(err,foundCampground){
 			res.render("campgrounds/edit.ejs",{campgrounds:foundCampground});
 		   });
 });
+
 //update
-router.put("/:id",middleware.chechCGOwnership,function(req,res){
+router.put("/:id", checkCGOwnership,function(req,res){
 campgrounds.findByIdAndUpdate(req.params.id,req.body.campgrounds,function(err,updatedCampgrounds){
 	if(err){
 		res.redirect("/campgrounds");
@@ -82,7 +88,7 @@ campgrounds.findByIdAndUpdate(req.params.id,req.body.campgrounds,function(err,up
 
 });
 
-router.delete("/:id",middleware.chechCGOwnership,function(req,res){
+router.delete("/:id",checkCGOwnership,function(req,res){
 	campgrounds.findByIdAndRemove(req.params.id,req.body.campgrounds,function(err,updatedCampgrounds){
 	if(err){
 		res.redirect("/campgrounds");
