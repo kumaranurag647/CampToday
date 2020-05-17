@@ -29,10 +29,9 @@
 					 
 				 </div>
 				  <p>
-				 <em> submiited by <%= campgrounds.author.username %></em>
+				 <em> submiited by <%= campgrounds.author.username %>, <%= moment(campgrounds.createdAt).fromNow() %></em>
 			     </p>
-				 <hr>
-			     
+				 
 				 <!--LIKES BUTTON -->
 				 <div class="pull-right">
                         <button type="button" class="btn btn-xs btn-primary" data-toggle="modal"
@@ -63,7 +62,7 @@
 				 <p class="card-text"><%= campgrounds.description%></p>
 	  		 
              
-    	          <%	 if(currentUser && campgrounds.author.id.equals(currentUser._id)) { %>
+    	          <% if(currentUser && (campgrounds.author.id.equals(currentUser._id) || currentUser.isAdmin)) { %>
 					<button class="btn btn-sm btn-warning">
 				        <a id="Edit-Button" href="/campgrounds/<%=campgrounds._id %>/edit" >Edit</a>
 					</button>
@@ -109,7 +108,7 @@
                             <p style="text-align: justify; word-wrap: break-word;">
                                 <%= review.text %>
                             </p>
-                            <% if(currentUser && review.author.id.equals(currentUser._id)){ %>
+                            <% if(currentUser && (review.author.id.equals(currentUser._id)) || currentUser.isAdmin){ %>
                             <a class="btn btn-xs btn-warning"
                                href="/campgrounds/<%=campgrounds._id %>/reviews/<%=review._id %>/edit">Edit</a>
                             <form id="delete-form" action="/campgrounds/<%=campgrounds._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
@@ -146,8 +145,8 @@
 				<div class="row card-body">
 					<div class="col-md-12">
 						<strong class="card-title"><%= comment.author.username %></strong>
-						<span class="float-right">10 Days Ago</span>
-						<p class="card-text">
+						<span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
+				     	<p class="card-text">
 			                <%= comment.text %>
 			            </p>
 						<%	if(currentUser && comment.author.id.equals(currentUser._id)) { %>
