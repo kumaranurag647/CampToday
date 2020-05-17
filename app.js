@@ -14,7 +14,8 @@ var express      =require("express"),
 
 var commentRoutes   =require("./routes/comments.js"),
 	campgroundRoutes=require("./routes/campgrounds.js"),
-	authRoutes      =require("./routes/landing.js");
+	authRoutes      =require("./routes/landing.js"),
+    reviewRoutes     = require("./routes/reviews");
 
 app.set('view engine', 'ejs');
 
@@ -59,7 +60,7 @@ app.use(overriding("_method"));
 app.use("/",authRoutes);
 app.use("/campgrounds/:id/comments/",commentRoutes);
 app.use("/campgrounds",campgroundRoutes);
-
+app.use("/campgrounds/:id/reviews", reviewRoutes);
 
 // app.listen(3000,function(){
 // 	console.log("YelpCamp");
