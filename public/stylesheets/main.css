@@ -11,6 +11,10 @@
 	background: #EAEDED;
 }
 
+.checked {
+    color: orange;
+}
+
 .card{
 	border: 1px solid black;
 }
