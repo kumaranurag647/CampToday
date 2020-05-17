@@ -14,7 +14,7 @@ middlewareObj.checkCGOwnership=function(req,res,next){
 		}
 		else{
 			//does campground belong to the user
-			if(foundCampground.author.id.equals(req.user._id)){
+			if(foundCampground.author.id.equals(req.user._id) || req.user.isAdmin){
 			next();
 			}
 			else{
@@ -38,9 +38,9 @@ middlewareObj.checkCommentOwnership=function(req,res,next){
 			res.redirect("back");
 		}
 		else{
-			//does campground belong to the user
 			
-			if(foundComment.author.id.equals(req.user._id)){
+			//does campground belong to the user
+			if(foundComment.author.id.equals(req.user._id) || req.user.isAdmin){
 			next();
 			}
 			else{

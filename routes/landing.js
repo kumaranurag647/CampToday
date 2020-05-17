@@ -20,6 +20,9 @@ router.get("/register",function(req,res){
 
 router.post("/register",function(req,res){
 	var newUser=new User({username:req.body.username});
+	if(req.body.adminCode === 'secretcode123'){
+		newUser.isAdmin = true;
+	} 
 	User.register(newUser,req.body.password,function(err,user){
 		if(err){
 			req.flash("error",err.message);
@@ -27,7 +30,7 @@ router.post("/register",function(req,res){
 		}
 		else{
 			passport.authenticate("local")(req,res,function(){
-				req.flash("success","Welcome to YelpCamp "+ user.username);
+				req.flash("success","Please lighten your wallet a little bit "+ user.username);
 				res.redirect("/checkout");
 			});
 		}
@@ -38,12 +41,12 @@ router.get("/login",function(req,res){
 	res.render("login.ejs");
 });
 
-router.post("/login",passport.authenticate("local",								   {
-	successRedirect:"/campgrounds",
+router.post("/login",passport.authenticate("local",{ 
+	failureFlash: 'Invalid credentials, please try again.',
 	failureRedirect:"/login"
-}
-),function(req,res){
-
+}), function(req,res){
+       req.flash("success", "Successfully logged in! Nice to meet you " + req.user.username + ".")
+	   res.redirect("/campgrounds");
 });
 
 router.get("/logout",function(req,res){

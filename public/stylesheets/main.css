@@ -16,7 +16,7 @@
 }
 
 .card{
-	border: 1px solid black;
+	border: none;
 }
 .thumbnail .caption{
 	padding:9px;
