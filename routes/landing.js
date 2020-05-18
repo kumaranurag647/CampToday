@@ -1,6 +1,7 @@
 var express = require("express"),
      router = express.Router(),
      passport = require("passport"),
+	 campgrounds = require("../models/campground.js")
      User = require("../models/user.js"),
 	 async = require("async"),
      crypto = require("crypto"), 		 
@@ -235,8 +236,14 @@ router.get("/users/:id", function(req, res){
 			req.flash("error", "Something went wrong");
 			res.redirect("/");
 		}
-		  res.render("users/show", {user: foundUser});
-	})	   
+		 campgrounds.find().where('author.id').equals(foundUser._id).exec(function(err, campgrounds) {
+      if(err) {
+        req.flash("error", "Something went wrong.");
+        return res.redirect("/");
+      }
+		  res.render("users/show", {user: foundUser, campgrounds: campgrounds});
+	});	   
+  });
 });
 
 module.exports=router;

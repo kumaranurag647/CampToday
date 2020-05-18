@@ -7,12 +7,30 @@
 	padding:0;
 }
 
-.card-body{
-	background: #EAEDED;
+.row card-body{
+    background: rgba(0,0,0,.03);   
+	margin: auto;
 }
+
+.card-body{
+	background: rgba(0,0,0,.03);
+	border: none
+	margin: auto;
+}
+
+.comment-card-body{
+	background: rgba(0,0,0,.03);
+	margin: auto;
+	border: none
+}
+
 
 .checked {
     color: orange;
+}
+
+.comment-card-mb-3{
+	border: none;
 }
 
 .card{
