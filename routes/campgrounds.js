@@ -8,7 +8,19 @@ router.use(isLoggedIn,isPaid);
 
 //Index - Show all campgrounds 
 router.get("/",function(req,res){
-	 if(req.query.paid)  res.locals.success = 'Payment succeeded, welcome to YelpCamp!';
+	if(req.query.search){
+		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+	    campgrounds.find({name: regex},function(err,allCampgrounds){
+		 if(err){
+			 console.log("error");
+		 }
+		 else{
+			 res.render("campgrounds/campgrounds.ejs",{campgrounds: allCampgrounds, currentUser: req.user});
+		 }
+	 });	
+	} 
+	else{
+	   if(req.query.paid)  res.locals.success = 'Payment succeeded, welcome to YelpCamp!';
 	    campgrounds.find({},function(err,allCampgrounds){
 		 if(err){
 			 console.log("error");
@@ -16,7 +28,8 @@ router.get("/",function(req,res){
 		 else{
 			 res.render("campgrounds/campgrounds.ejs",{campgrounds:allCampgrounds,currentUser:req.user});
 		 }
-	 });
+	 });	
+	}
 });
 
 
@@ -167,5 +180,10 @@ router.post("/:id/like", isLoggedIn, function (req, res) {
         });
     });
 });
+
+function escapeRegex(text){
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 
 module.exports=router;
