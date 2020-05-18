@@ -20,7 +20,7 @@ router.get("/",function(req,res){
 	 });	
 	} 
 	else{
-	   if(req.query.paid)  res.locals.success = 'Payment succeeded, welcome to YelpCamp!';
+	   if(req.query.paid)  res.locals.success = 'Payment succeeded, welcome to CampToday!';
 	    campgrounds.find({},function(err,allCampgrounds){
 		 if(err){
 			 console.log("error");

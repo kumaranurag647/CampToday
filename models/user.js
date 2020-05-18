@@ -4,6 +4,9 @@ var passportLocalMongoose=require("passport-local-mongoose");
 var UserSchema= new mongoose.Schema({
 	username: String,
 	password: String,
+	email: {type: String},
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
 	isAdmin: {type: Boolean, default: false},
 	isPaid: {type: Boolean, default: false}
 });
