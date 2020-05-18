@@ -16,10 +16,21 @@
 				  <a href="/campgrounds/new">Add New Campground</a>
 			  </button>
 		  </p>
+		  <form action = "/campgrounds" method = "GET" class = "form-inline">
+			 <div class = "form-group">
+				 <input type = "text" name = "search" placeholder = "campground" class = "form-control">
+				 <input type = "submit" value = "search" class = "btn btn-default">
+			  </div> 
+		  </form>
 	  </div>
     </header>
 
 <div class="row text-center" >
+   <div class = "col-md-12">
+	   <% if(campgrounds.length < 1){ %>
+	    <h3>None of the campgrounds matched that query.</h3>
+	   <% } %>
+   </div>	
 <% campgrounds.forEach(function(campground){%>
 	<div class="col-lg-3 col-md-4 col-sm-6 mb-4">
 	

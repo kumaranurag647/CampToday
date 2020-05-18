@@ -58,15 +58,13 @@ app.use(function(req,res,next){
 	res.locals.success=req.flash("success");
 	next();
 });
+
 app.use(overriding("_method"));
 app.use("/",authRoutes);
 app.use("/campgrounds/:id/comments/",commentRoutes);
 app.use("/campgrounds",campgroundRoutes);
 app.use("/campgrounds/:id/reviews", reviewRoutes);
 
-// app.listen(3000,function(){
-// 	console.log("YelpCamp");
-// });
  var port = process.env.PORT || 3000;
  app.listen(port, function () {
   console.log("Server Has Started!");
