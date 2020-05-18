@@ -29,7 +29,7 @@
 					 
 				 </div>
 				  <p>
-				 <em> submiited by <%= campgrounds.author.username %>, <%= moment(campgrounds.createdAt).fromNow() %></em>
+					  <em> submiited by <a href = "/users/<%= campgrounds.author.id %>"><%= campgrounds.author.username %></a>, <%= moment(campgrounds.createdAt).fromNow() %></em>
 			     </p>
 				 
 				 <!--LIKES BUTTON -->

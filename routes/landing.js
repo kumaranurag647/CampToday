@@ -22,7 +22,12 @@ router.get("/register",function(req,res){
 });
 
 router.post("/register",function(req,res){
-	var newUser=new User({username: req.body.username, email: req.body.email});
+	var newUser=new User({
+		username: req.body.username, 
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
+		avatar: req.body.avatar,
+		email: req.body.email});
 	if(req.body.adminCode === 'secretcode123'){
 		newUser.isAdmin = true;
 	} 
@@ -221,6 +226,17 @@ router.post('/reset/:token', function(req, res) {
   ], function(err) {
     res.redirect('/campgrounds');
   });
+});
+
+//User profile
+router.get("/users/:id", function(req, res){
+	User.findById(req.params.id, function(err, foundUser){
+		if(err){
+			req.flash("error", "Something went wrong");
+			res.redirect("/");
+		}
+		  res.render("users/show", {user: foundUser});
+	})	   
 });
 
 module.exports=router;

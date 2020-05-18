@@ -1,6 +1,7 @@
-var express=require("express");
-var router =express.Router();
-var campgrounds=require("../models/campground.js");
+var express = require("express"),
+    router = express.Router(),
+    campgrounds = require("../models/campground.js"),
+    Comment = require("../models/comment.js");
 var Review = require("../models/review");
 
 const {checkCGOwnership, isLoggedIn, isPaid}=require("../middleware");
