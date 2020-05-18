@@ -1,4 +1,4 @@
-#YelpCamp
+#CampToday
 
 ##Initial Setup
 
@@ -148,7 +148,7 @@ BOOTSTRAP NAV COLLPASE JS
 
 •change styling in show template - comment delete/update
 
-•UPDATE/DELETE CAMPGROUND# YelpCamp
+•UPDATE/DELETE CAMPGROUND# CampToday
 
 name url verb desc.
 

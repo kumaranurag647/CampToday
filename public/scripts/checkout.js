@@ -6,7 +6,7 @@
 	  
 	   } 
 	   var orderData = {
-		  items: [{ id: "yelpcamp-registration-fee" }],
+		  items: [{ id: "CampToday-registration-fee" }],
 		  currency: "inr"
        };
 		// Set your publishable key: remember to change this to your live publishable key in production

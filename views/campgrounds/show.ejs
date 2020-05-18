@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-md-3">
 			<p class="lead">
-				YelpCamp
+				CampToday
 			</p>
 			<div>
 				<div class="list-group">
@@ -125,7 +125,7 @@
                     <% } %>
                     <div>
                         <a class="btn btn-primary btn-lg <% if (currentUser && campgrounds.reviews.some(function (review) {return review.author.id.equals(currentUser._id)})) { %> disabled <% } %>" href="/campgrounds/<%= campgrounds._id %>/reviews/new">
-                            Write a New Review</a>
+                            Write a new review</a>
                     </div>
                 </div>
             </div>
