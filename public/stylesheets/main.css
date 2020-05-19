@@ -1,15 +1,13 @@
-
+.pagination {
+    display: inline-block !important;
+    vertical-align: middle; 
+}
 .thumbnail img{
 	width:100%;
-	
+	border: 1px solid black;
 }
 .thumbnail{
 	padding:0;
-}
-
-.row card-body{
-    background: rgba(0,0,0,.03);   
-	margin: auto;
 }
 
 .card-body{

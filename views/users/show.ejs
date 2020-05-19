@@ -7,15 +7,31 @@
 			<img src="<%= user.avatar %>" alt="user profile image">
 			<div class="caption"><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
 		</div>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quasi similique architecto ad modi sunt quaerat possimus, officiis quos. Voluptatibus repellendus exercitationem, id saepe sunt consectetur non quam sapiente assumenda.
-
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quasi similique architecto ad modi sunt quaerat possimus, officiis quos. Voluptatibus repellendus exercitationem, id saepe sunt consectetur non quam sapiente assumenda.
+		
+		<div>
+			<% if(currentUser && (user._id.equals(currentUser._id) || currentUser.isAdmin)) { %>
+			        
+					<button class="btn btn-sm btn-warning">
+				        <a id="Edit-Button" href="/editprofile/<%= user._id %>" >Edit</a>
+					</button>
+					<% } %>
+		  </div>
 	</div>
 	<div class="col-md-8">
-		<h3><%= user.username %>'s campgrounds:</h3>
-		<ul>
+		<br><br><hr>
+		<h3><%= user.username %>'s campgrounds :-</h3>
+		<hr><hr>
+		<% if(campgrounds.length<1) { %>
+		<h4>You have not added any campgrounds till now...</h4>	
+		<% } %>
+		<ul>	
 		<% campgrounds.forEach(function(campground) { %>
-			<li><a href="/campgrounds/<%= campground.id %>"><%= campground.name %></a></li>
+			<div class = "c1">
+			   <li class = "c2"><h4><a href="/campgrounds/<%= campground.id %>"><%= campground.name %></a></h4></li>
+			</div>
+			<style>
+			 div.c1 li.c2 a { color: green; }
+            </style>
 		<% }); %>
 		</ul>
 	</div>
