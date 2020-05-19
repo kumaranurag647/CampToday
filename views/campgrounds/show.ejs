@@ -18,7 +18,7 @@
   			 <div class="card-body">
     		 <h5 class="card-title float-left"><a> <%= campgrounds.name%></a></h5>
 	  		 <p class="float-right">
-						$<%=campgrounds.price%>/night
+						Rs. <%=campgrounds.price%>/night
 			</p>
 				 <div class="clearfix">
 					 
@@ -190,7 +190,7 @@
           <!--Printing the comment-->
           <p><%= comment.text %></p>
           <!--If the visitor is logged in and the owner of the comment, show the edit and delete buttons-->
-            <% if (currentUser && currentUser._id.equals(comment.author.id)) { %>
+            <% if (currentUser && (currentUser._id.equals(comment.author.id) || currentUser.isAdmin)) { %>
           <!--Edit button used for collapsing the edit comment form-->
           <a class="btn btn-xs btn-warning" role="button" data-toggle="collapse" href="#collapseEdit<%= comment._id %>" aria-expanded="false" aria-controls="collapse<%= comment._id %>">
             Edit</a>
@@ -233,8 +233,8 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Campground likes: <%= campgrounds.likes.length %></h4>
+				<a type="button" class="close" data-dismiss="modal"><i class="fa fa-times-circle"></i></a>
             </div>
             <div class="modal-body">
                 <table class="table table-striped">

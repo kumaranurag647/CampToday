@@ -230,7 +230,7 @@ router.post('/reset/:token', function(req, res) {
 });
 
 //User profile
-router.get("/users/:id", function(req, res){
+router.get("/users/:id", isLoggedIn, function(req, res){
 	User.findById(req.params.id, function(err, foundUser){
 		if(err){
 			req.flash("error", "Something went wrong");
@@ -245,6 +245,35 @@ router.get("/users/:id", function(req, res){
 	});	   
   });
 });
+
+//edit-profile get request
+router.get("/editprofile/:id", isLoggedIn, function(req, res){
+    User.findById(req.params.id, function(err, foundUser){
+		if(err){
+			req.flash("error", "Something went wrong");
+			res.redirect("/");
+		}
+		else{
+			res.render("users/profiledit", {user: foundUser});
+		}
+	});		
+});	
+
+//edit-profile post request.
+router.put("/editprofile/:id", isLoggedIn, function(req, res){
+	var newUser = req.body.user;
+	if(req.body.adminCode === "secretcode123") newUser.isAdmin = true;
+    User.findByIdAndUpdate(req.params.id, {$set: newUser}, function(err, foundUser){
+		if(err){
+			req.flash("error", "Something went wrong");
+			res.redirect("/");
+		}
+		else{
+			req.flash("success","Your profile has been updated successfully.");
+            res.redirect("/users/" + foundUser._id);
+		}
+	});		
+});	
 
 module.exports=router;
 
