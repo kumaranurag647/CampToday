@@ -1,6 +1,7 @@
 var express = require("express"),
      router = express.Router(),
      passport = require("passport"),
+	 campgrounds = require("../models/campground.js")
      User = require("../models/user.js"),
 	 async = require("async"),
      crypto = require("crypto"), 		 
@@ -22,7 +23,12 @@ router.get("/register",function(req,res){
 });
 
 router.post("/register",function(req,res){
-	var newUser=new User({username: req.body.username, email: req.body.email});
+	var newUser=new User({
+		username: req.body.username, 
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
+		avatar: req.body.avatar,
+		email: req.body.email});
 	if(req.body.adminCode === 'secretcode123'){
 		newUser.isAdmin = true;
 	} 
@@ -220,6 +226,23 @@ router.post('/reset/:token', function(req, res) {
     }
   ], function(err) {
     res.redirect('/campgrounds');
+  });
+});
+
+//User profile
+router.get("/users/:id", function(req, res){
+	User.findById(req.params.id, function(err, foundUser){
+		if(err){
+			req.flash("error", "Something went wrong");
+			res.redirect("/");
+		}
+		 campgrounds.find().where('author.id').equals(foundUser._id).exec(function(err, campgrounds) {
+      if(err) {
+        req.flash("error", "Something went wrong.");
+        return res.redirect("/");
+      }
+		  res.render("users/show", {user: foundUser, campgrounds: campgrounds});
+	});	   
   });
 });
 

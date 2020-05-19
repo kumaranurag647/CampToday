@@ -1,6 +1,7 @@
-var express=require("express");
-var router =express.Router();
-var campgrounds=require("../models/campground.js");
+var express = require("express"),
+    router = express.Router(),
+    campgrounds = require("../models/campground.js"),
+    Comment = require("../models/comment.js");
 var Review = require("../models/review");
 
 const {checkCGOwnership, isLoggedIn, isPaid}=require("../middleware");
@@ -90,35 +91,24 @@ router.get("/:id",function(req,res){
 //edit
 router.get("/:id/edit", checkCGOwnership,function(req,res){
 	   campgrounds.findById(req.params.id,function(err,foundCampground){
-			res.render("campgrounds/edit.ejs",{campgrounds:foundCampground});
+			res.render("campgrounds/edit.ejs",{campgrounds: foundCampground});
 		   });
 });
 
 
 // UPDATE CAMPGROUND ROUTE
-router.put("/:id", checkCGOwnership, function (req, res) {
-	delete req.body.campground.rating;
-    // find and update the correct campground
-    Campground.findById(req.params.id, function (err, campground) {
-        if (err) {
-            console.log(err);
-            res.redirect("/campgrounds");
+router.put("/:id", checkCGOwnership, function(req, res){
+	var camp = req.body.campgrounds;
+    campgrounds.findByIdAndUpdate(req.params.id, {$set: camp}, function(err, campground){
+        if(err){
+            req.flash("error", err.message);
+            res.redirect("back");
         } else {
-            campground.name = req.body.campground.name;
-            campground.description = req.body.campground.description;
-            campground.image = req.body.campground.image;
-            campground.save(function (err) {
-                if (err) {
-                    console.log(err);
-                    res.redirect("/campgrounds");
-                } else {
-                    res.redirect("/campgrounds/" + campground._id);
-                }
-            });
+            req.flash("success","The Campground has been updated successfully.");
+            res.redirect("/campgrounds/" + campground._id);
         }
     });
-});
-
+  });
 
 
 //DELETE ROUTE
