@@ -275,5 +275,9 @@ router.put("/editprofile/:id", isLoggedIn, function(req, res){
 	});		
 });	
 
+router.get("/aboutus", isLoggedIn, function(req, res){
+	res.redirect("https://drive.google.com/open?id=1g4LrLx9ReS0MTB3jXLOh1OEvTQ26jtty");	
+});
+
 module.exports=router;
 
