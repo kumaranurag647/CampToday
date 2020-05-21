@@ -26,7 +26,7 @@ middlewareObj.checkCGOwnership=function(req,res,next){
 	   }
 	   else{
 		   req.flash("error","You need to login first to do that!")
-	   res.redirect("back");
+	       res.redirect("back");
 	   }
 
 }
@@ -64,7 +64,7 @@ middlewareObj.isLoggedIn=function (req,res,next){
 	 	return res.send({error: 'Login Required'})
 	 }
 	
-	req.flash("error","You need to login first to do that!")
+	req.flash("error","You need to login first to do that!");
 	res.redirect("/login");
 }
 
