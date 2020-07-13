@@ -1,6 +1,6 @@
 .pagination {
     display: inline-block !important;
-    vertical-align: middle; 
+    text-align : center;
 }
 .thumbnail img{
 	width:100%;

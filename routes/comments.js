@@ -7,7 +7,7 @@ const {checkCommentOwnership, isLoggedIn, isPaid}=require("../middleware");
 router.use(isLoggedIn,isPaid);
 
 router.get("/new", function(req,res){
-	campgrounds.findById(req.params.id,function(err,campground){
+	campgrounds.findById(req.params.id, function(err,campground){
 		
 		if(err || !campground){
 			 req.flash("error","Campground not found");
