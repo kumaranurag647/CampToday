@@ -1,5 +1,4 @@
 var middlewareObj={};
-
 var campgrounds=require("../models/campground.js");
 var Comment=require("../models/comment.js");
 var Review = require("../models/review");
@@ -83,7 +82,7 @@ middlewareObj.checkReviewOwnership = function(req, res, next) {
                 res.redirect("back");
             }  else {
                 // does user own the comment?
-                if(foundReview.author.id.equals(req.user._id)) {
+                if(foundReview.author.id.equals(req.user._id) || req.user.isAdmin) {
                     next();
                 } else {
                     req.flash("error", "You don't have permission to do that");
